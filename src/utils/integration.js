@@ -1,9 +1,11 @@
 const rectangleIntegration = (a, b, n, f) => {
   const h = (b - a) / n;
+  console.log("h", h);
   var sum = 0;
-  for (k = 0; k < n; k++) {
+  for (var k = 0; k < n; k++) {
     var x = a + k * h;
-    sum += f(x);
+    var result = f(x);
+    sum += result;
   }
   return sum * h;
 };
@@ -20,7 +22,6 @@ const trapezoidalIntegration = (a, b, n, f) => {
   }
   return (sum + acum) * h;
 };
-
 
 const maxValue = (a, b, f) => {
   const maxStored = 0;
@@ -40,14 +41,11 @@ const monteCarloIntegration = (a, b, n, f) => {
   }
 };
 
-
-var a = 0; // Intervalo inferior
-var b = 10; // Intervalo superior
-var n = 100; // Número de rectángulos
+var a = -1; // Intervalo inferior
+var b = 4; // Intervalo superior
+var n = 1000; // Número de rectángulos
 var f = function (x) {
-  return Math.pow(x, 3);
+  return Math.cos(x);
 }; // Función a integrar
 var result = rectangleIntegration(a, b, n, f);
 console.log(result);
-
-
