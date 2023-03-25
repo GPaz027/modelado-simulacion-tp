@@ -2,24 +2,21 @@ import Plot from "react-plotly.js";
 import { layoutGenerator, traceGenerator } from "../../utils/plotly";
 
 const RectangleComponent = ({ inf, sup, n, func }) => {
-  const rectangleIntegration = (a, b, n, f) => {
+  const rectangleIntegration = (inf, sup, rec, f) => {
+    let a = parseInt(inf);
+    let b = parseInt(sup);
+    let n = parseInt(rec);
     const valuesX = [];
     const valuesY = [];
-    console.log("Func", func);
-    console.log("Inf", a);
-    console.log("Sup", b);
-    const h = (b - a) / n;
-    console.log("h", h);
-    console.log("n", n);
-    var sum = 0;
+    let h = (b - a) / n;
+    let sum = 0;
     for (var k = 0; k < n; k++) {
-      var x = a + k * h;
+      let x = a + (k * h);
       valuesX.push(x);
       var result = f(x);
       valuesY.push(result);
       sum += result;
     }
-    console.log(sum * h);
     return {
       result: sum * h,
       x: valuesX,

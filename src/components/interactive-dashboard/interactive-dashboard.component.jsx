@@ -2,6 +2,7 @@ import RectangleComponent from "../rectangle/rectangle.component";
 import TypeSelect from "../type-select/type-select.component";
 import { useContext } from "react";
 import { UserInputContext } from "../../context/user-input/user-input.context";
+import Trapezoidal from "../trapezoidal/trapezoidal";
 
 const InteractiveDashboard = () => {
   const {
@@ -16,20 +17,18 @@ const InteractiveDashboard = () => {
 
   const handleInfChange = (event) => {
     setInfLimit(event.target.value);
-    console.log(infLimit);
   };
 
   const handleSupChange = (event) => {
     setSupLimit(event.target.value);
-    console.log(supLimit);
   };
 
   const handleRecChange = (event) => {
     setRecAmount(event.target.value);
-    console.log(recAmount);
   };
 
   const func = (x) => Math.cos(x);
+  const func2 = (x) => Math.pow(x, 2);
 
   return (
     <div>
@@ -41,6 +40,11 @@ const InteractiveDashboard = () => {
           func={func}
         />
       )}
+
+      {integralType === "trapezoidal" && (
+        <Trapezoidal inf={infLimit} sup={supLimit} n={recAmount} func={func} />
+      )}
+
 
       <TypeSelect />
 
