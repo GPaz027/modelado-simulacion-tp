@@ -1,10 +1,13 @@
 import Plot from "react-plotly.js";
 import { layoutGenerator, traceGenerator } from "../../utils/plotly";
+import { create, all } from "mathjs";
 
-const RectangleComponent = ({ inf, sup, n, func }) => {
+const mathjs = create(all);
+
+const RectangleComponent = ({ inf, sup, n, equation }) => {
   const rectangleIntegration = (inf, sup, rec, f) => {
-    let a = parseInt(inf);
-    let b = parseInt(sup);
+    let a = parseFloat(inf);
+    let b = parseFloat(sup);
     let n = parseInt(rec);
     const valuesX = [];
     const valuesY = [];
@@ -13,7 +16,7 @@ const RectangleComponent = ({ inf, sup, n, func }) => {
     for (var k = 0; k < n; k++) {
       let x = a + (k * h);
       valuesX.push(x);
-      var result = f(x);
+      var result = mathjs.evaluate(f, {x: x}); //Usar mathjs.evaluate en lugar de e.evaluate
       valuesY.push(result);
       sum += result;
     }
@@ -24,9 +27,7 @@ const RectangleComponent = ({ inf, sup, n, func }) => {
     };
   };
 
-  // mathjax y latex
-
-  const result = rectangleIntegration(inf, sup, n, func);
+  const result = rectangleIntegration(inf, sup, n, equation);
 
   const trace = traceGenerator(
     result.x,
@@ -42,7 +43,7 @@ const RectangleComponent = ({ inf, sup, n, func }) => {
     result.y,
     "",
     "bar",
-    "Aproximación Rectangulos",
+    `Altura: ${h}`,
     h
   );
 
