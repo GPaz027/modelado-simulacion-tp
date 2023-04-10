@@ -1,24 +1,30 @@
 import Plot from "react-plotly.js";
 import { traceGenerator, layoutGenerator } from "../../utils/plotly";
+import { require } from "mathjs";
 
-const Trapezoidal = ({ inf, sup, n, func }) => {
+const math = require('mathjs');
+
+const Trapezoidal = ({ inf, sup, n, equation }) => {
   const trapezoidalIntegration = (inf, sup, rec, f) => {
     let a = parseInt(inf);
     let b = parseInt(sup);
     let n = parseInt(rec);
-
+  
+    const scope = { x: 0 };
+    const node = math.compile(f); // guarda el nodo en una constante
+  
     const valuesX = [];
     const valuesY = [];
-
+  
     const h = (b - a) / n;
-    const f_x0 = f(a);
-    const f_xn = f(b);
+    const f_x0 = node.evaluate({ x: a }); // evalúa el nodo en a
+    const f_xn = node.evaluate({ x: b }); // evalúa el nodo en b
     var acum = (f_x0 + f_xn) / 2;
     var sum = 0;
     for (var k = 1; k < n; k++) {
       let x = a + k * h;
       valuesX.push(x);
-      let result = f(x);
+      let result = node.evaluate({ x }); // evalúa el nodo en x
       valuesY.push(result);
       sum += result;
     }
@@ -29,7 +35,8 @@ const Trapezoidal = ({ inf, sup, n, func }) => {
     };
   };
 
-  const result = trapezoidalIntegration(inf, sup, n, func);
+
+  const result = trapezoidalIntegration(inf, sup, n, equation);
 
   const trace = traceGenerator(
     result.x,
