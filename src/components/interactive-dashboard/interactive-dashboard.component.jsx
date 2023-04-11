@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import RectangleComponent from "../rectangle/rectangle.component";
 import Trapezoidal from "../trapezoidal/trapezoidal";
 import TypeSelect from "../type-select/type-select.component";
-import CalculadoraInput from "../calculadora-input/CalculadoraInput";
 import { UserInputContext } from "../../context/user-input/user-input.context";
 import { useContext } from "react";
 import FunctionRenderer from "../funcion-plot/FunctionPlotter";
