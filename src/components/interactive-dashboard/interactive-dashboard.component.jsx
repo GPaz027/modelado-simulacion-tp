@@ -7,6 +7,8 @@ import RectangleComponent from "../rectangle/rectangle.component";
 import Trapezoidal from "../trapezoidal/trapezoidal";
 import MonteCarloIntegration from "../montecarlo/montecarlo.component";
 
+import { FunctionViewer, InputBlock } from "./interactive-dashboard.styles";
+
 const InteractiveDashboard = () => {
   const {
     infLimit,
@@ -42,16 +44,19 @@ const InteractiveDashboard = () => {
 
   return (
     <div>
-      <label htmlFor="input">Ingrese una ecuacion:</label>
-      <input
-        type="text"
-        id="input"
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleButtonClick}>Validar</button>
-      {equation && <FunctionRenderer expression={equation} />}
-      <div style={{ marginTop: "10px" }}>
+      <FunctionViewer>
+        <label htmlFor="input">Ingrese una ecuacion:</label>
+        <input
+          type="text"
+          id="input"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleButtonClick}>Validar</button>
+        {equation && <FunctionRenderer expression={equation} />}
+      </FunctionViewer>
+
+      <InputBlock>
         <input
           placeholder="Límite inferior"
           type="number"
@@ -71,9 +76,8 @@ const InteractiveDashboard = () => {
           onChange={handleRecChange}
           max="7000"
         />
-      </div>
-
-      <TypeSelect />
+        <TypeSelect />
+      </InputBlock>
 
       {integralType === "rectangles" && (
         <RectangleComponent

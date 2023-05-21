@@ -61,7 +61,7 @@ const Trapezoidal = ({ inf, sup, n, equation }) => {
       <Plot
         data={data}
         layout={layout}
-        style={{ width: "50%", height: "50%" }}
+        style={{ width: "50%", height: "50%", justifyContent: "center", margin: "0 auto" }}
       />
       <span>{result.result}</span>
     </div>

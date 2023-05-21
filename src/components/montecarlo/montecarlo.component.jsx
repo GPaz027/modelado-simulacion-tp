@@ -14,7 +14,7 @@ import { create, all } from "mathjs";
 
 const mathjs = create(all);
 
-const MonteCarloIntegration = ({ inf, sup, n, equation }) => {
+const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 0, equation }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -119,7 +119,18 @@ const MonteCarloIntegration = ({ inf, sup, n, equation }) => {
       },
     },
   };
-  return <Line options={options} data={data} />;
+  return (
+    <Line
+      options={options}
+      data={data}
+      style={{
+        width: "50%",
+        height: "50%",
+        justifyContent: "center",
+        margin: "0 auto",
+      }}
+    />
+  );
 };
 
 export default MonteCarloIntegration;
