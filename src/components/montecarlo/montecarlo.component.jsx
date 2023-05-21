@@ -1,72 +1,125 @@
-import Plot from "react-plotly.js";
-import { layoutGenerator, traceGenerator } from "../../utils/plotly";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
 import { create, all } from "mathjs";
 
 const mathjs = create(all);
 
-const MonteCarloComponent = ({ inf, sup, n, equation }) => {
-  const generadorNumeros = (a, b, n) => {
-    const numeros = [];
-    console.log("a: " + a);
-    console.log("b: " + b);
-    for (var k = 0; k < n; k++) {
-      numeros.push(Math.random() * (b - a) + a);
-    }
-    return numeros;
-  };
-
-  const MonteCarloIntegration = (inf, sup, n, f) => {
-    inf = parseFloat(inf);
-    sup = parseFloat(sup);
-    n = parseInt(n);
-    console.log("Limite inferior: " + inf);
-    console.log("Limite superior: " + sup);
-    console.log("numero de x:" + n);
-    let valuesX = [];
-    let valuessY = [];
-    let sum = 0;
-    let numerosRandom = generadorNumeros(inf, sup, n);
-    console.log("numeros random de verdad:" + numerosRandom);
-    valuesX = numerosRandom;
-    console.log("funcion: " + f);
-    for (var k = 0; k < n; k++) {
-      var result = mathjs.evaluate(f, { x: numerosRandom[k] });
-      valuessY.push(result);
-      sum += result;
-    }
-    console.log("suma antes de cuenta: " + sum);
-    return {
-      result: ((sup - inf) * sum) / n,
-      x: valuesX,
-      y: valuessY,
-    };
-  };
-
-  const result = MonteCarloIntegration(inf, sup, n, equation);
-  console.log("resultado: " + result.result);
-  console.log("puntos x: " + result.x);
-  console.log("puntos y: " + result.y);
-
-  const trace = traceGenerator(
-    result.x,
-    result.y,
-    "markers+text",
-    "scatter",
-    "Integral"
+const MonteCarloIntegration = ({ inf, sup, n, equation }) => {
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
   );
 
-  const layout = layoutGenerator("Integración por Monte Carlo");
+  const parsedInf = parseInt(inf);
+  const parsedSup = parseInt(sup);
+  const parsedN = parseInt(n);
 
-  return (
-    <div>
-      <Plot
-        data={[trace]}
-        layout={layout}
-        style={{ width: "50%", height: "50%" }}
-      />
-      <span>{result.result}</span>
-    </div>
+  const points = [];
+  const X = [];
+  const Y = [];
+  const funcValues = [];
+  let sum = 0;
+  let validPoints = 0;
+  for (let i = 0; i < parsedN; i++) {
+    const x = parsedInf + Math.random() * (parsedSup - parsedInf);
+    const y = Math.random() * 10;
+    var value = mathjs.evaluate(equation, { x: x });
+    if (y <= value) validPoints++;
+    points.push({ x, y });
+    X.push(x);
+    Y.push(y);
+    funcValues.push(value);
+    console.log("X", x, "Y", y);
+    sum += value;
+  }
+
+  const maxY = points.reduce((max, current) =>
+    current.y > max.y ? current : max
   );
+  const minY = points.reduce((min, current) =>
+    current.y < min.y ? current : min
+  );
+
+  console.log("MaxY", maxY);
+  console.log("MinY", minY);
+
+  // Estimate the integral
+  const area = (parsedSup - parsedInf) * (maxY.y - minY.y);
+  console.log("Area", area);
+  const result = (validPoints / points.length) * area;
+  const estimate = (sum / parsedN) * area;
+  console.log("Result", result);
+  console.log("Points X", points);
+
+  // Prepare data for the scatter plot
+  const data = {
+    labels: X,
+    datasets: [
+      {
+        label: "Points",
+        data: Y,
+        showLine: false,
+        pointBackgroundColor: "rgba(0, 0, 255, 0.5)",
+        pointRadius: 3,
+        borderWidth: 1,
+      },
+      {
+        label: "Function",
+        data: funcValues,
+        showLine: false,
+        pointBackgroundColor: "rgba(234, 72, 34, 1)",
+        pointRadius: 3,
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Chart options
+  const options = {
+    responsive: true,
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
+    scales: {
+      x: {
+        display: true,
+        type: "linear",
+        ticks: {
+          stepSize: 1,
+          min: 1,
+        },
+      },
+      y: {
+        display: true,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+      title: {
+        display: true,
+        text: "Monte Carlo Integration",
+      },
+    },
+  };
+  return <Line options={options} data={data} />;
 };
 
-export default MonteCarloComponent;
+export default MonteCarloIntegration;

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import RectangleComponent from "../rectangle/rectangle.component";
-import Trapezoidal from "../trapezoidal/trapezoidal";
-import MontecarloComponent from "../montecarlo/montecarlo.component";
-import TypeSelect from "../type-select/type-select.component";
 import { UserInputContext } from "../../context/user-input/user-input.context";
 import { useContext } from "react";
 import FunctionRenderer from "../funcion-plot/FunctionPlotter";
-import MonteCarloIntegration from "../montecarlo/montecarlo.test.component";
+import TypeSelect from "../type-select/type-select.component";
+import RectangleComponent from "../rectangle/rectangle.component";
+import Trapezoidal from "../trapezoidal/trapezoidal";
+import MonteCarloIntegration from "../montecarlo/montecarlo.component";
 
 const InteractiveDashboard = () => {
   const {
@@ -40,8 +39,6 @@ const InteractiveDashboard = () => {
   const handleButtonClick = () => {
     setEquation(inputValue);
   };
-
-  //console.log("Ecuacion ingresada: " + equation);
 
   return (
     <div>
