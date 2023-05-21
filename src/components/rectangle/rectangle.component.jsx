@@ -16,7 +16,7 @@ const RectangleComponent = ({ inf, sup, n, equation }) => {
     for (var k = 0; k < n; k++) {
       let x = a + (k * h);
       valuesX.push(x);
-      var result = mathjs.evaluate(f, {x: x}); //Usar mathjs.evaluate en lugar de e.evaluate
+      var result = mathjs.evaluate(f, {x: x}); 
       valuesY.push(result);
       sum += result;
     }

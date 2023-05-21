@@ -6,8 +6,7 @@ import TypeSelect from "../type-select/type-select.component";
 import { UserInputContext } from "../../context/user-input/user-input.context";
 import { useContext } from "react";
 import FunctionRenderer from "../funcion-plot/FunctionPlotter";
-import { BlockMath } from "react-katex";
-
+import MonteCarloIntegration from "../montecarlo/montecarlo.test.component";
 
 const InteractiveDashboard = () => {
   const {
@@ -37,7 +36,6 @@ const InteractiveDashboard = () => {
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
-
 
   const handleButtonClick = () => {
     setEquation(inputValue);
@@ -90,15 +88,20 @@ const InteractiveDashboard = () => {
       )}
 
       {integralType === "trapezoidal" && (
-        <Trapezoidal inf={infLimit} sup={supLimit} n={recAmount} equation={equation} />
-      )}
-
-      {integralType === "monte-carlo" && (
-        <MontecarloComponent 
+        <Trapezoidal
           inf={infLimit}
           sup={supLimit}
           n={recAmount}
-          equation ={equation} 
+          equation={equation}
+        />
+      )}
+
+      {integralType === "monte-carlo" && (
+        <MonteCarloIntegration
+          inf={infLimit}
+          sup={supLimit}
+          n={recAmount}
+          equation={inputValue}
         />
       )}
     </div>

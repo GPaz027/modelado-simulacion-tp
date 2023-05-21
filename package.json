@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "chartjs": "^0.3.24",
     "function-plot": "^1.23.2",
     "mathjs": "^11.8.0",
     "nerdamer": "^1.1.13",
