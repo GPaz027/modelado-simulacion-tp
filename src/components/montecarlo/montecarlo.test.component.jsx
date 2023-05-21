@@ -11,7 +11,11 @@ import {
   Legend,
 } from "chart.js";
 
-function MonteCarloIntegration({ inf, sup, n, equation }) {
+import { create, all } from "mathjs";
+
+const mathjs = create(all);
+
+const MonteCarloIntegration = ({ inf, sup, n, equation }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -31,10 +35,10 @@ function MonteCarloIntegration({ inf, sup, n, equation }) {
   const points = [];
   let sum = 0;
   let validPoints = 0;
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i < parsedN; i++) {
     const x = parsedInf + Math.random() * (parsedSup - parsedInf);
     const y = Math.random();
-    const value = Math.pow(x, 2);
+    var value = mathjs.evaluate(equation, {x: x}); 
     if (y <= value) validPoints++;
     points.push({ x, y });
     console.log("X", x, "Y", y);
@@ -55,7 +59,7 @@ function MonteCarloIntegration({ inf, sup, n, equation }) {
   const area = (parsedSup - parsedInf) * (maxY.y - minY.y);
   console.log("area", area);
   const result = (validPoints / points.length) * area;
-  const estimate = (sum / n) * area;
+  const estimate = (sum / parsedN) * area;
   console.log("Result", result);
 
   console.log(points);
