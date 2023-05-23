@@ -7,7 +7,13 @@ import RectangleComponent from "../rectangle/rectangle.component";
 import Trapezoidal from "../trapezoidal/trapezoidal";
 import MonteCarloIntegration from "../montecarlo/montecarlo.component";
 
-import { FunctionViewer, InputBlock } from "./interactive-dashboard.styles";
+import {
+  FunctionViewer,
+  InputContainer,
+  InputBlock,
+  Input,
+  Label
+} from "./interactive-dashboard.styles";
 
 const InteractiveDashboard = () => {
   const {
@@ -56,28 +62,40 @@ const InteractiveDashboard = () => {
         {equation && <FunctionRenderer expression={equation} />}
       </FunctionViewer>
 
-      <InputBlock>
-        <input
-          placeholder="Límite inferior"
-          type="number"
-          value={infLimit}
-          onChange={handleInfChange}
-        />
-        <input
-          placeholder="Límite superior"
-          type="number"
-          value={supLimit}
-          onChange={handleSupChange}
-        />
-        <input
-          placeholder="Cantidad de rectángulos"
-          type="number"
-          value={recAmount}
-          onChange={handleRecChange}
-          max="7000"
-        />
+      <InputContainer>
+        <InputBlock>
+          <Label>Límite inferior (a)</Label>
+          <Input
+            placeholder="Límite inferior"
+            type="number"
+            value={infLimit}
+            onChange={handleInfChange}
+          />
+        </InputBlock>
+
+        <InputBlock>
+          <Label>Límite superior (b)</Label>
+          <Input
+            placeholder="Límite superior"
+            type="number"
+            value={supLimit}
+            onChange={handleSupChange}
+          />
+        </InputBlock>
+
+        <InputBlock>
+          <Label>Cantidad de puntos (N)</Label>
+          <Input
+            placeholder="Cantidad de rectángulos"
+            type="number"
+            value={recAmount}
+            onChange={handleRecChange}
+            max="7000"
+          />
+        </InputBlock>
+
         <TypeSelect />
-      </InputBlock>
+      </InputContainer>
 
       {integralType === "rectangles" && (
         <RectangleComponent
