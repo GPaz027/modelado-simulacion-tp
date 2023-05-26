@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Select = styled.select`
+  margin-left: 1vw;
   margin-top: 10px;
   padding: 1vw 1vw;
   cursor: pointer;

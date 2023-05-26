@@ -100,7 +100,7 @@ const InteractiveDashboard = () => {
             onChange={handleRecChange}
           />
         </InputBlock>
-
+        <Label>Método de integración</Label>
         <TypeSelect />
       </InputContainer>
 

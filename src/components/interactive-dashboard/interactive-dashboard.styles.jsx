@@ -80,6 +80,7 @@ export const EquationLabel = styled.label`
 `;
 
 export const SubmitButton = styled.button`
+  cursor: pointer;
   font-size: 19px;
   background-color: rgba(0, 0, 0, 0.8);
   transition: background-color 0.8s ease;

@@ -10,7 +10,6 @@ const Trapezoidal = ({ inf, sup, n, equation }) => {
     let b = parseInt(sup);
     let n = parseInt(rec);
 
-    const scope = { x: 0 };
     const node = math.compile(f); // Guarda el nodo en una constante
 
     const valuesX = [];
