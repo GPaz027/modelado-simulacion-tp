@@ -12,7 +12,11 @@ import {
   InputContainer,
   InputBlock,
   Input,
-  Label
+  Label,
+  EquationInput,
+  EquationForm,
+  EquationLabel,
+  SubmitButton
 } from "./interactive-dashboard.styles";
 
 const InteractiveDashboard = () => {
@@ -51,15 +55,17 @@ const InteractiveDashboard = () => {
   return (
     <div>
       <FunctionViewer>
-        <label htmlFor="input">Ingrese una ecuacion:</label>
-        <input
-          type="text"
-          id="input"
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <button onClick={handleButtonClick}>Validar</button>
-        {equation && <FunctionRenderer expression={equation} />}
+        <EquationLabel htmlFor="input">Ingrese una ecuacion</EquationLabel>
+        <EquationForm>
+          <EquationInput
+            type="text"
+            id="input"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <SubmitButton onClick={handleButtonClick}>Validar</SubmitButton>
+          {equation && <FunctionRenderer expression={equation} />}
+        </EquationForm>
       </FunctionViewer>
 
       <InputContainer>
