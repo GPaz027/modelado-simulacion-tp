@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { UserInputContext } from "../../context/user-input/user-input.context";
+import { Fragment } from "react";
 import { useContext } from "react";
+import { UserInputContext } from "../../context/user-input/user-input.context";
 import FunctionRenderer from "../funcion-plot/FunctionPlotter";
 import TypeSelect from "../type-select/type-select.component";
 import RectangleComponent from "../rectangle/rectangle.component";
-import Trapezoidal from "../trapezoidal/trapezoidal";
+import Trapezoidal from "../trapezoidal/trapezoidal.component";
 import MonteCarloIntegration from "../montecarlo/montecarlo.component";
 
 import {
@@ -16,7 +17,7 @@ import {
   EquationInput,
   EquationForm,
   EquationLabel,
-  SubmitButton
+  SubmitButton,
 } from "./interactive-dashboard.styles";
 
 const InteractiveDashboard = () => {
@@ -53,15 +54,16 @@ const InteractiveDashboard = () => {
   };
 
   return (
-    <div>
+    <Fragment>
       <FunctionViewer>
-        <EquationLabel htmlFor="input">Ingrese una ecuacion</EquationLabel>
+        <EquationLabel htmlFor="input">Ingrese una ecuación</EquationLabel>
         <EquationForm>
           <EquationInput
             type="text"
             id="input"
             value={inputValue}
             onChange={handleInputChange}
+            placeholder="Ej: x^3"
           />
           <SubmitButton onClick={handleButtonClick}>Validar</SubmitButton>
           {equation && <FunctionRenderer expression={equation} />}
@@ -90,13 +92,12 @@ const InteractiveDashboard = () => {
         </InputBlock>
 
         <InputBlock>
-          <Label>Cantidad de puntos (N)</Label>
+          <Label>Cantidad de puntos (n)</Label>
           <Input
             placeholder="Cantidad de rectángulos"
             type="number"
             value={recAmount}
             onChange={handleRecChange}
-            max="7000"
           />
         </InputBlock>
 
@@ -129,7 +130,7 @@ const InteractiveDashboard = () => {
           equation={inputValue}
         />
       )}
-    </div>
+    </Fragment>
   );
 };
 

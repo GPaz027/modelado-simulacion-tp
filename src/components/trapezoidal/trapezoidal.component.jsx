@@ -1,5 +1,6 @@
 import Plot from "react-plotly.js";
-import { traceGenerator, layoutGenerator } from "../../utils/plotly";
+import { layoutGenerator } from "../../utils/plotly";
+import { ResultSpan } from "./trapezoidal.styles";
 
 const math = require("mathjs");
 
@@ -57,13 +58,18 @@ const Trapezoidal = ({ inf, sup, n, equation }) => {
   const layout = layoutGenerator("Integración por trapecios");
 
   return (
-    <div>
+    <div style={{ "margin-bottom": "1vw" }}>
       <Plot
         data={data}
         layout={layout}
-        style={{ width: "50%", height: "50%", justifyContent: "center", margin: "0 auto" }}
+        style={{
+          width: "50%",
+          height: "50%",
+          justifyContent: "center",
+          margin: "0 auto",
+        }}
       />
-      <span>{result.result}</span>
+      <ResultSpan>Resultado aproximado: {result.result}</ResultSpan>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import Plot from "react-plotly.js";
 import { layoutGenerator, traceGenerator } from "../../utils/plotly";
 import { create, all } from "mathjs";
+import { ResultSpan } from "../trapezoidal/trapezoidal.styles";
 
 const mathjs = create(all);
 
@@ -14,9 +15,9 @@ const RectangleComponent = ({ inf, sup, n, equation }) => {
     let h = (b - a) / n;
     let sum = 0;
     for (var k = 0; k < n; k++) {
-      let x = a + (k * h);
+      let x = a + k * h;
       valuesX.push(x);
-      var result = mathjs.evaluate(f, {x: x}); 
+      var result = mathjs.evaluate(f, { x: x });
       valuesY.push(result);
       sum += result;
     }
@@ -50,13 +51,18 @@ const RectangleComponent = ({ inf, sup, n, equation }) => {
   const layout = layoutGenerator("Integración por rectángulos");
 
   return (
-    <div>
+    <div style={{ "margin-bottom": "1vw" }}>
       <Plot
         data={[trace, rectangle]}
         layout={layout}
-        style={{ width: "50%", height: "50%", justifyContent: "center", margin: "0 auto" }}
+        style={{
+          width: "50%",
+          height: "50%",
+          justifyContent: "center",
+          margin: "0 auto",
+        }}
       />
-      <span>{result.result}</span>
+      <ResultSpan>Resultado aproximado: {result.result}</ResultSpan>
     </div>
   );
 };

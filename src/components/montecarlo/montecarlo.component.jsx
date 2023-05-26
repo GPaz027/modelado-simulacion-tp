@@ -11,10 +11,11 @@ import {
 } from "chart.js";
 
 import { create, all } from "mathjs";
+import { ResultSpan } from "./montecarlo.styles";
 
 const mathjs = create(all);
 
-const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 0, equation }) => {
+const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 1, equation }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -35,9 +36,20 @@ const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 0, equation }) => {
   const funcValues = [];
   let sum = 0;
   let validPoints = 0;
+
+  const YInf = mathjs.evaluate(equation, { x: parsedInf });
+  const YSup = mathjs.evaluate(equation, { x: parsedSup });
+  var keepOrder = true;
+  if (YInf > YSup) keepOrder = false;
+
   for (let i = 0; i < parsedN; i++) {
     const x = parsedInf + Math.random() * (parsedSup - parsedInf);
-    const y = Math.random() * 10;
+    var y;
+    if (keepOrder) {
+      y = Math.floor(Math.random() * (YSup - YInf + 1)) + YInf;
+    } else {
+      y = Math.floor(Math.random() * (YInf - YSup + 1)) + YSup;
+    }
     var value = mathjs.evaluate(equation, { x: x });
     if (y <= value) validPoints++;
     points.push({ x, y });
@@ -48,10 +60,10 @@ const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 0, equation }) => {
     sum += value;
   }
 
-  const maxY = points.reduce((max, current) =>
+  var maxY = points.reduce((max, current) =>
     current.y > max.y ? current : max
   );
-  const minY = points.reduce((min, current) =>
+  var minY = points.reduce((min, current) =>
     current.y < min.y ? current : min
   );
 
@@ -119,17 +131,21 @@ const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 0, equation }) => {
       },
     },
   };
+
   return (
-    <Line
-      options={options}
-      data={data}
-      style={{
-        width: "50%",
-        height: "50%",
-        justifyContent: "center",
-        margin: "0 auto",
-      }}
-    />
+    <div style={{"margin-bottom": "1vw"}}>
+      <Line
+        options={options}
+        data={data}
+        style={{
+          width: "50%",
+          height: "50%",
+          justifyContent: "center",
+          margin: "0 auto",
+        }}
+      />
+      <ResultSpan>Resultado aproximado: {result}</ResultSpan>
+    </div>
   );
 };
 

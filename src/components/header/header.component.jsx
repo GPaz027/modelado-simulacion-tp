@@ -1,8 +1,11 @@
+import { Fragment } from "react";
+import { HeaderStyles } from "./header.styles";
+
 const Header = () => {
   return (
-    <div>
-      <h1>Calculadora de Integrales</h1>
-    </div>
+    <Fragment>
+      <HeaderStyles>Calculadora de Integrales</HeaderStyles>
+    </Fragment>
   );
 };
 
