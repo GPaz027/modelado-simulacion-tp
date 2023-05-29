@@ -1,11 +1,24 @@
 import React, { useState } from "react";
-import { UserInputContext } from "../../context/user-input/user-input.context";
+import { Fragment } from "react";
 import { useContext } from "react";
+import { UserInputContext } from "../../context/user-input/user-input.context";
 import FunctionRenderer from "../funcion-plot/FunctionPlotter";
 import TypeSelect from "../type-select/type-select.component";
 import RectangleComponent from "../rectangle/rectangle.component";
-import Trapezoidal from "../trapezoidal/trapezoidal";
+import Trapezoidal from "../trapezoidal/trapezoidal.component";
 import MonteCarloIntegration from "../montecarlo/montecarlo.component";
+
+import {
+  FunctionViewer,
+  InputContainer,
+  InputBlock,
+  Input,
+  Label,
+  EquationInput,
+  EquationForm,
+  EquationLabel,
+  SubmitButton,
+} from "./interactive-dashboard.styles";
 
 const InteractiveDashboard = () => {
   const {
@@ -41,39 +54,55 @@ const InteractiveDashboard = () => {
   };
 
   return (
-    <div>
-      <label htmlFor="input">Ingrese una ecuacion:</label>
-      <input
-        type="text"
-        id="input"
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleButtonClick}>Validar</button>
-      {equation && <FunctionRenderer expression={equation} />}
-      <div style={{ marginTop: "10px" }}>
-        <input
-          placeholder="Límite inferior"
-          type="number"
-          value={infLimit}
-          onChange={handleInfChange}
-        />
-        <input
-          placeholder="Límite superior"
-          type="number"
-          value={supLimit}
-          onChange={handleSupChange}
-        />
-        <input
-          placeholder="Cantidad de rectángulos"
-          type="number"
-          value={recAmount}
-          onChange={handleRecChange}
-          max="7000"
-        />
-      </div>
+    <Fragment>
+      <FunctionViewer>
+        <EquationLabel htmlFor="input">Ingrese una ecuación</EquationLabel>
+        <EquationForm>
+          <EquationInput
+            type="text"
+            id="input"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Ej: x^3"
+          />
+          <SubmitButton onClick={handleButtonClick}>Validar</SubmitButton>
+          {equation && <FunctionRenderer expression={equation} />}
+        </EquationForm>
+      </FunctionViewer>
 
-      <TypeSelect />
+      <InputContainer>
+        <InputBlock>
+          <Label>Límite inferior (a)</Label>
+          <Input
+            placeholder="Límite inferior"
+            type="number"
+            value={infLimit}
+            onChange={handleInfChange}
+          />
+        </InputBlock>
+
+        <InputBlock>
+          <Label>Límite superior (b)</Label>
+          <Input
+            placeholder="Límite superior"
+            type="number"
+            value={supLimit}
+            onChange={handleSupChange}
+          />
+        </InputBlock>
+
+        <InputBlock>
+          <Label>Cantidad de puntos (n)</Label>
+          <Input
+            placeholder="Cantidad de rectángulos"
+            type="number"
+            value={recAmount}
+            onChange={handleRecChange}
+          />
+        </InputBlock>
+        <Label>Método de integración</Label>
+        <TypeSelect />
+      </InputContainer>
 
       {integralType === "rectangles" && (
         <RectangleComponent
@@ -101,7 +130,7 @@ const InteractiveDashboard = () => {
           equation={inputValue}
         />
       )}
-    </div>
+    </Fragment>
   );
 };
 

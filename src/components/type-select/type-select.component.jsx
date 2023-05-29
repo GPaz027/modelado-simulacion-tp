@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { UserInputContext } from "../../context/user-input/user-input.context";
+import { Select, Option } from "./type-select.styles";
+import { Fragment } from "react";
 
 const TypeSelect = () => {
   const { integralType, setIntegralType } = useContext(UserInputContext);
@@ -9,14 +11,14 @@ const TypeSelect = () => {
   };
 
   return (
-    <div>
-      <select value={integralType} onChange={handleOptionChange}>
-        <option value="">Tipo de integración</option>
-        <option value="rectangles">Rectángulos</option>
-        <option value="trapezoidal">Trapecios</option>
-        <option value="monte-carlo">Monte Carlo</option>
-      </select>
-    </div>
+    <Fragment>
+      <Select value={integralType} onChange={handleOptionChange}>
+        <Option value="">Tipo de integración</Option>
+        <Option value="rectangles">Rectángulos</Option>
+        <Option value="trapezoidal">Trapecios</Option>
+        <Option value="monte-carlo">Monte Carlo</Option>
+      </Select>
+    </Fragment>
   );
 };
 
