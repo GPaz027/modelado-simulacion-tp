@@ -51,7 +51,7 @@ const RectangleComponent = ({ inf, sup, n, equation }) => {
   const layout = layoutGenerator("Integración por rectángulos");
 
   return (
-    <div style={{ "marginBottom": "1vw" }}>
+    <div style={{ marginBottom: "1vw" }}>
       <Plot
         data={[trace, rectangle]}
         layout={layout}

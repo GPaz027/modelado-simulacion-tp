@@ -1,12 +1,11 @@
 export const traceGenerator = (x, y, mode, type, name, width) => {
-
   return {
     x: x,
     y: y,
     mode: mode,
     type: type,
     name: name,
-    width: width
+    width: width,
   };
 };
 
