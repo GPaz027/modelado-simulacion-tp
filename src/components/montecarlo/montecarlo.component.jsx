@@ -46,12 +46,16 @@ const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 1, equation }) => {
     const x = parsedInf + Math.random() * (parsedSup - parsedInf);
     var y;
     if (keepOrder) {
-      y = Math.floor(Math.random() * (YSup - YInf + 1)) + YInf;
+      y = Math.random() * (YSup - YInf + 1) + YInf;
     } else {
-      y = Math.floor(Math.random() * (YInf - YSup + 1)) + YSup;
+      y = Math.random() * (YInf - YSup + 1) + YSup;
     }
     var value = mathjs.evaluate(equation, { x: x });
-    if (y <= value) validPoints++;
+    if (value >= 0) {
+      if (y <= value && y >= 0) validPoints++;
+    } else {
+      if (y >= value && y <= 0) validPoints--;
+    }
     points.push({ x, y });
     X.push(x);
     Y.push(y);
@@ -133,7 +137,7 @@ const MonteCarloIntegration = ({ inf = 0, sup = 0, n = 1, equation }) => {
   };
 
   return (
-    <div style={{"margin-bottom": "1vw"}}>
+    <div style={{ marginBottom: "1vw" }}>
       <Line
         options={options}
         data={data}

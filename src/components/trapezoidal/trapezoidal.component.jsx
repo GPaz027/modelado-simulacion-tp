@@ -57,7 +57,7 @@ const Trapezoidal = ({ inf, sup, n, equation }) => {
   const layout = layoutGenerator("Integración por trapecios");
 
   return (
-    <div style={{ "margin-bottom": "1vw" }}>
+    <div style={{ "marginBottom": "1vw" }}>
       <Plot
         data={data}
         layout={layout}
